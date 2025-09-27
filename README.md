@@ -59,10 +59,20 @@ sudo systemctl restart haproxy
 ### After reboot host machine
 
 ```
+minikube start --driver=docker --addons=ingress,dashboard --vm=true --memory=6144 --cpus=4 --disk-size=100GB --kubernetes-version=v1.23.9
+chectl server:stop
+chectl server:start
+
 minikube ssh
 
 sudo mkdir -p /tmp/hostpath-provisioner/admin-che/claim-devworkspace
 sudo chmod 777 /tmp/hostpath-provisioner/admin-che/claim-devworkspace
 
 exit
+```
+
+
+## If stuck at process about ingress in making workspace
+```
+kubectl rollout restart deployment ingress-nginx-controller -n ingress-nginx
 ```
